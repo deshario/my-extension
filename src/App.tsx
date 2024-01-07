@@ -4,14 +4,15 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [color, setColor] = useState("");
 
-  const onClick = async () => {
+  const setBackground = async () => {
     const [tab] = await chrome.tabs.query({ active: true });
-    chrome.scripting.executeScript({
+    chrome.scripting.executeScript<string[], void>({
       target: { tabId: tab.id! },
-      func: () => {
-        alert("hello from my extension");
+      args: [color],
+      func: (color) => {
+        document.body.style.backgroundColor = color;
       },
     });
   };
@@ -24,10 +25,11 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button onClick={onClick}>Alert from chrome API</button>
+        <input
+          type="color"
+          onChange={(event) => setColor(event.currentTarget.value)}
+        />
+        <button onClick={setBackground}>Apply background</button>
       </div>
     </>
   );
