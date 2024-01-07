@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Wallet",
-  "description": "A smart wallet",
+  "name": "My Extension",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
   "version": "1.0",
   "icons": {
-    "32": "icons/icon.png"
+    "32": "icon.png"
   },
   "action": {
     "default_popup": "index.html"
