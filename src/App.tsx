@@ -1,32 +1,28 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import Clock from "./components/Clock";
+import Layout from "./components/layout";
+import { TimeZones } from "./types";
 
-function App() {
-  const setBackground = async (mColor: string) => {
-    const [tab] = await chrome.tabs.query({ active: true });
-    chrome.scripting.executeScript<string[], void>({
-      target: { tabId: tab.id! },
-      args: [mColor],
-      func: (mColor) => {
-        document.body.style.backgroundColor = mColor;
-      },
-    });
-  };
-
+const App = () => {
   return (
-    <>
-      <div>
-        <img src={viteLogo} className="logo" alt="Vite logo" />
-        <img src={reactLogo} className="logo react" alt="React logo" />
-      </div>
-      <h2>Background Changer</h2>
-      <input
-        type="color"
-        onChange={(event) => setBackground(event.currentTarget.value)}
-      />
-    </>
+    <div>
+      <Layout
+        render={(activeMenu) => {
+          switch (activeMenu) {
+            case "clock":
+              return <Clock timeZone={TimeZones.Bangkok} />;
+            case "alarm":
+              return "alarm";
+            case "timer":
+              return "timer";
+            case "stopwatch":
+              return "stopwatch";
+            default:
+              return null;
+          }
+        }}
+      ></Layout>
+    </div>
   );
-}
+};
 
 export default App;
